@@ -130,7 +130,6 @@ void execute_cmd(char **argv)
 	}
 
 	pid = fork();
-
 	if (pid == 0)
 	{
 		if (execve(full_path, argv, environ) == -1)
@@ -151,5 +150,4 @@ void execute_cmd(char **argv)
 	
 	free(full_path);
 }
-
 
