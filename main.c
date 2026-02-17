@@ -77,7 +77,7 @@ int main(void)
 	size_t len = 0;
 	ssize_t n_read;
 	char **argv;
-	int last_status = 0;
+	int last_status = 0, i;
 
 	while (1)
 	{
@@ -98,11 +98,19 @@ int main(void)
 				free(line);
 				exit(last_status);
 			}
-			last_status = execute_cmd(argv);
+			/* Реализация встроенной команды env */
+			if (strcmp(argv[0], "env") == 0)
+			{
+				for (i = 0; environ[i]; i++)
+					printf("%s\n", environ[i]);
+				last_status = 0;
+			}
+			else
+				last_status = execute_cmd(argv);
 		}
-
 		free(argv);
 	}
 	return (last_status);
 }
+
 
