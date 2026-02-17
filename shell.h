@@ -12,7 +12,7 @@ extern char **environ;
 
 void prompt(void);
 char **parse_line(char *line);
-void execute_cmd(char **argv);
+int execute_cmd(char **argv);
 void free_args(char **argv);
 char *_which(char *command);
 char *_getenv(const char *name);
