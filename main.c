@@ -36,35 +36,6 @@ char **parse_line(char *line)
 	return (argv);
 }
 
-/**
- * execute_cmd - executes command
- * @argv: arguments array
- */
-void execute_cmd(char **argv)
-{
-	pid_t pid;
-	int status;
-
-	if (argv[0] == NULL)
-		return;
-
-	pid = fork();
-
-	if (pid == 0)
-	{
-		if (execve(argv[0], argv, environ) == -1)
-			perror("./hsh");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid > 0)
-	{
-		wait(&status);
-	}
-	else
-	{
-		perror("fork");
-	}
-}
 
 /**
  * free_args - frees argument array
