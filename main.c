@@ -98,7 +98,6 @@ int main(void)
 				free(line);
 				exit(last_status);
 			}
-			/* Реализация встроенной команды env */
 			if (strcmp(argv[0], "env") == 0)
 			{
 				for (i = 0; environ[i]; i++)
