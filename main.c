@@ -80,7 +80,7 @@ int main(void)
 }
 
 /**
- * execute_cmd - executes command only if it exists in PATH
+ * execute_cmd - executes command only if it exists
  * @argv: arguments array
  */
 void execute_cmd(char **argv)
@@ -95,7 +95,8 @@ void execute_cmd(char **argv)
 	full_path = _which(argv[0]);
 	if (full_path == NULL)
 	{
-		perror("./hsh");
+		/* Стандартный формат вывода ошибки для shell */
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 		return;
 	}
 
