@@ -91,7 +91,15 @@ int main(void)
 
 		argv = parse_line(line);
 		if (argv && argv[0])
+		{
+			if (strcmp(argv[0], "exit") == 0)
+			{
+				free(argv);
+				free(line);
+				exit(last_status);
+			}
 			last_status = execute_cmd(argv);
+		}
 
 		free(argv);
 	}
