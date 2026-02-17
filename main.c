@@ -57,26 +57,30 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
 	char **argv;
+	int last_status = 0;
 
 	while (1)
 	{
-		prompt();
+		prompt(); [cite: 1]
 
-		read = getline(&line, &len, stdin);
+		read = getline(&line, &len, stdin); [cite: 1]
 		if (read == -1)
 		{
 			free(line);
-			exit(EXIT_SUCCESS);
+			exit(last_status);
 		}
 
-		argv = parse_line(line);
-		if (argv == NULL)
+		argv = parse_line(line); [cite: 1]
+		if (argv == NULL || argv[0] == NULL)
+		{
+			free(argv);
 			continue;
+		}
 
-		execute_cmd(argv);
-		free_args(argv);
+		last_status = execute_cmd(argv);
+		free_args(argv); [cite: 1]
 	}
-	return (0);
+	return (last_status);
 }
 
 /**
@@ -95,7 +99,6 @@ void execute_cmd(char **argv)
 	full_path = _which(argv[0]);
 	if (full_path == NULL)
 	{
-		/* Стандартный формат вывода ошибки для shell */
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 		return;
 	}
