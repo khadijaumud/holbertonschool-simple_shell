@@ -84,23 +84,25 @@ int main(void)
 }
 
 /**
- * execute_cmd - executes command only if it exists
+ * execute_cmd - executes command only if it exists in PATH
  * @argv: arguments array
+ * Return: status code (0 for success, 127 for not found)
  */
-void execute_cmd(char **argv)
+int execute_cmd(char **argv)
 {
 	pid_t pid;
-	int status;
+	int status, exit_status = 0;
 	char *full_path;
 
 	if (argv == NULL || argv[0] == NULL)
-		return;
+		return (0);
 
-	full_path = _which(argv[0]);
+	full_path = _which(argv[0]); [cite: 1, 3]
 	if (full_path == NULL)
 	{
+		/* Формат ошибки: shell_name: line_number: command: not found */
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-		return;
+		return (127); /* Ожидаемый код для "command not found" */
 	}
 
 	pid = fork();
@@ -114,9 +116,15 @@ void execute_cmd(char **argv)
 		}
 	}
 	else if (pid > 0)
+	{
 		wait(&status);
+		if (WIFEXITED(status))
+			exit_status = WEXITSTATUS(status);
+	}
 	else
 		perror("fork");
 
 	free(full_path);
+	return (exit_status);
 }
+
