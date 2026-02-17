@@ -1,7 +1,8 @@
 /**
- * _which - ищет команду в каталогах PATH
- * @command: имя команды (например, "ls")
- * * Return: полный путь к команде или NULL, если не найдена
+ * _which - locates a command in the PATH directories
+ * @command: the command name (e.g., "ls")
+ *
+ * Return: full path to the command if found, NULL otherwise
  */
 char *_which(char *command)
 {
@@ -12,7 +13,6 @@ char *_which(char *command)
     if (!path)
         return (NULL);
 
-    /* Если в команде уже есть '/', проверяем её как прямой путь */
     if (strchr(command, '/') && stat(command, &st) == 0)
         return (strdup(command));
 
@@ -21,7 +21,6 @@ char *_which(char *command)
 
     while (token)
     {
-        /* Создаем строку: "директория/команда" */
         full_path = malloc(strlen(token) + strlen(command) + 2);
         sprintf(full_path, "%s/%s", token, command);
 
