@@ -1,5 +1,4 @@
-#include "shell.h"
-
+#include "shell.h" 
 
 /**
  * _which - locates a command in the PATH directories
@@ -25,6 +24,7 @@ char *_which(char *command)
     while (token)
     {
         full_path = malloc(strlen(token) + strlen(command) + 2);
+        if (!full_path) break;
         sprintf(full_path, "%s/%s", token, command);
 
         if (stat(full_path, &st) == 0)
@@ -39,4 +39,3 @@ char *_which(char *command)
     free(path_copy);
     return (NULL);
 }
-
