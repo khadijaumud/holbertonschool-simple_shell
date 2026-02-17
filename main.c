@@ -36,7 +36,10 @@ char **parse_line(char *line)
 	return (argv);
 }
 
-
+/**
+ * execute_cmd - executes command
+ * @argv: arguments array
+ */
 void execute_cmd(char **argv)
 {
 	pid_t pid;
@@ -63,13 +66,20 @@ void execute_cmd(char **argv)
 	}
 }
 
-
+/**
+ * free_args - frees argument array
+ * @argv: argument array
+ */
 void free_args(char **argv)
 {
 	free(argv);
 }
 
-
+/**
+ * main - simple shell entry point
+ *
+ * Return: Always 0
+ */
 int main(void)
 {
 	char *line = NULL;
