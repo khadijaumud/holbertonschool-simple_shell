@@ -93,7 +93,6 @@ void execute_cmd(char **argv)
 		return;
 
 	full_path = _which(argv[0]);
-
 	if (full_path == NULL)
 	{
 		perror("./hsh");
@@ -111,14 +110,9 @@ void execute_cmd(char **argv)
 		}
 	}
 	else if (pid > 0)
-	{
 		wait(&status);
-	}
 	else
-	{
 		perror("fork");
-	}
-	
+
 	free(full_path);
 }
-
