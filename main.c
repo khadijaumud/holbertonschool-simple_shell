@@ -107,3 +107,49 @@ int main(void)
 	}
 	return (0);
 }
+
+/**
+ * execute_cmd - executes command only if it exists in PATH
+ * @argv: arguments array
+ */
+void execute_cmd(char **argv)
+{
+	pid_t pid;
+	int status;
+	char *full_path;
+
+	if (argv == NULL || argv[0] == NULL)
+		return;
+
+	full_path = _which(argv[0]);
+
+	if (full_path == NULL)
+	{
+		perror("./hsh");
+		return;
+	}
+
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execve(full_path, argv, environ) == -1)
+		{
+			perror("./hsh");
+			free(full_path);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid > 0)
+	{
+		wait(&status);
+	}
+	else
+	{
+		perror("fork");
+	}
+	
+	free(full_path);
+}
+
+
