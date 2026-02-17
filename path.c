@@ -1,3 +1,6 @@
+#include "shell.h"
+
+
 /**
  * _which - locates a command in the PATH directories
  * @command: the command name (e.g., "ls")
